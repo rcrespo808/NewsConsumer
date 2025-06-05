@@ -27,6 +27,12 @@ Create a simple Angular application that:
 - Use RxJS for async data handling
 - Add basic error handling for failed API calls
 
+### API Keys
+API tokens are managed in Angular's `environment` files.
+`src/environments/environment.ts` contains the development keys and
+`environment.prod.ts` holds the production values. The project currently
+includes a token for **The News API**.
+
 ### Evaluation Criteria
 - Code quality and structure
 - Use of Angular best practices

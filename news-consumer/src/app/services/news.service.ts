@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,9 @@ import { Observable } from 'rxjs';
 export class NewsService {
   constructor(private http: HttpClient) { }
 
-  // This will be implemented later with actual API calls
   getNews(): Observable<any> {
-    return this.http.get('YOUR_NEWS_API_ENDPOINT');
+    const { baseUrl, token } = environment.newsApi;
+    const url = `${baseUrl}/news/top?categories=science&api_token=${token}`;
+    return this.http.get(url);
   }
 }

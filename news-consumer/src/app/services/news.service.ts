@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NewsResponse, Article } from '../models/article.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
-  private apiKey = 'YOUR_API_KEY'; // Replace with your NewsAPI key
-  private baseUrl = 'https://newsapi.org/v2';
+  private apiKey = environment.newsApi.token;
+  private baseUrl = environment.newsApi.baseUrl;
 
   constructor(private http: HttpClient) { }
 

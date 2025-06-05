@@ -20,6 +20,10 @@ docs/
 
 The `src` folder will contain the Angular project, organized by components and services. The `docs` folder stores documentation like this project plan.
 
+## API Keys
+API tokens live in the Angular `environment` files. Development and production
+values are provided for **The News API**.
+
 ## Next Steps
 1. Set up the Angular project scaffold.
 2. Implement routing for the Home, About, and Article Details pages. **(done)**

@@ -22,7 +22,7 @@ The `src` folder will contain the Angular project, organized by components and s
 
 ## Next Steps
 1. Set up the Angular project scaffold.
-2. Implement routing for the Home, About, and Article Details pages.
+2. Implement routing for the Home, About, and Article Details pages. **(done)**
 3. Integrate a news API service to fetch articles.
 4. Create components for the list and detail views.
 5. Style the application for a clean user experience.

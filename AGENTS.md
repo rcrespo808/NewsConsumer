@@ -12,3 +12,4 @@ These instructions apply to the entire repository.
 
 ## PR Guidelines
 - Summaries should mention any new instructions or conventions from AGENTS.md.
+- Tour Toolkit currently does not support appending binary files to pull requests.

@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   newsApi: {
-    baseUrl: 'https://api.thenewsapi.com/v1',
-    token: 'f10f4341211f466d82f2e909eb926b12'
+    baseUrl: 'https://newsapi.org/v2',
+    token: 'f10f4341211f466d82f2e909eb926b12' 
   }
 };
 

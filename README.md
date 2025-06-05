@@ -40,3 +40,5 @@ includes a token for **The News API**.
 - UI/UX and responsiveness
 - Maintainability and organization
 
+
+See [docs/styleguide.md](docs/styleguide.md) for the UI styleguide.

@@ -31,3 +31,6 @@ values are provided for **The News API**.
 4. Create components for the list and detail views.
 5. Style the application for a clean user experience.
 
+
+## Styleguide
+For UI design details, see [styleguide.md](styleguide.md).

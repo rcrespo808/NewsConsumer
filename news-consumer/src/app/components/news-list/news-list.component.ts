@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../../services/news.service';
+import { SearchService } from '../../services/search.service';
 import { Article } from '../../models/article.interface';
 
 @Component({
@@ -84,10 +85,16 @@ export class NewsListComponent implements OnInit {
   loading = false;
   error: string | null = null;
 
-  constructor(private newsService: NewsService) {}
+  constructor(
+    private newsService: NewsService,
+    private searchService: SearchService
+  ) {}
 
   ngOnInit() {
     this.loadArticles();
+    this.searchService.searchTerm$.subscribe(term => {
+      this.searchArticles(term);
+    });
   }
 
   loadArticles() {
@@ -104,6 +111,24 @@ export class NewsListComponent implements OnInit {
         this.error = 'Failed to load news articles. Please try again.';
         this.loading = false;
         console.error('Error loading news:', err);
+      }
+    });
+  }
+
+  searchArticles(keyword: string) {
+    this.loading = true;
+    this.error = null;
+
+    this.newsService.searchNews(keyword).subscribe({
+      next: (response) => {
+        this.articles = response.articles;
+        this.selectedArticle = null;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load news articles. Please try again.';
+        this.loading = false;
+        console.error('Error searching news:', err);
       }
     });
   }

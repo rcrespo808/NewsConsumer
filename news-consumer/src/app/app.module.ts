@@ -27,6 +27,7 @@ import { ArticleDetailComponent } from './components/article-detail/article-deta
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { NEWS_SOURCE } from './services/news-source.interface';
 import { TheNewsApiService } from './services/the-news-api.service';
+import { NewsApiOrgService } from './services/news-api-org.service';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { TheNewsApiService } from './services/the-news-api.service';
     MatFormFieldModule
   ],
   providers: [
-    { provide: NEWS_SOURCE, useExisting: TheNewsApiService, multi: true }
+    { provide: NEWS_SOURCE, useExisting: TheNewsApiService, multi: true },
+    { provide: NEWS_SOURCE, useExisting: NewsApiOrgService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -224,7 +224,20 @@ const SOURCE_METADATA: Record<string, { name: string; description: string }> = {
 })
 export class PreferencesComponent implements OnInit {
   isDarkMode = false;
-  newsSources: NewsSourcePref[] = [];
+  newsSources: NewsSource[] = [
+    {
+      id: 'the-news-api',
+      name: 'The News API',
+      enabled: true,
+      description: 'Top stories powered by The News API'
+    },
+    {
+      id: 'newsapi-org',
+      name: 'NewsAPI.org',
+      enabled: true,
+      description: 'Headlines and articles from NewsAPI.org'
+    }
+  ];
 
   constructor(
     private router: Router,

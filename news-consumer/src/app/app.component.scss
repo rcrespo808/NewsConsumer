@@ -1,3 +1,5 @@
+@import '../styles/butler-theme.scss';
+
 .content {
   padding: 20px;
   max-width: 1200px;
@@ -6,4 +8,77 @@
 
 mat-toolbar {
   margin-bottom: 20px;
+}
+
+.butler-app-shell {
+  min-height: 100vh;
+  background: $background;
+  display: flex;
+  flex-direction: column;
+}
+
+.butler-main-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr 480px;
+  gap: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.sidebar-nav {
+  grid-column: 1;
+  z-index: 2;
+}
+
+.main-content {
+  grid-column: 2;
+  padding: 2.5rem 2rem 2rem 2rem;
+  min-width: 0;
+  background: $background;
+  border-right: 1px solid $surface;
+}
+
+.article-detail-placeholder {
+  grid-column: 3;
+  background: $surface;
+  min-width: 320px;
+  padding: 2.5rem 2rem;
+  border-left: 1px solid $surface;
+  /* Placeholder for future ArticleDetail component */
+}
+
+.bottom-nav {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .butler-main-layout {
+    grid-template-columns: 200px 1fr 320px;
+  }
+  .article-detail-placeholder {
+    min-width: 200px;
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .butler-main-layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar-nav {
+    display: none;
+  }
+  .article-detail-placeholder {
+    display: none;
+  }
+  .main-content {
+    padding: 1.5rem 0.5rem;
+    border-right: none;
+  }
+  .bottom-nav {
+    display: flex;
+  }
 }

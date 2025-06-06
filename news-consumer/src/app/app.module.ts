@@ -18,6 +18,12 @@ import { NewsListComponent } from './components/news-list/news-list.component';
 import { AboutComponent } from './components/about/about.component';
 import { ArticleDetailsComponent } from './components/article-details/article-details.component';
 import { NewsSearchComponent } from './components/news-search/news-search.component';
+import { ButlerNewsCardComponent } from './components/butler-news-card/butler-news-card.component';
+import { AppBarComponent } from './components/app-bar/app-bar.component';
+import { SidebarNavComponent } from './components/sidebar-nav/sidebar-nav.component';
+import { BottomNavComponent } from './components/bottom-nav/bottom-nav.component';
+import { ArticleListComponent } from './components/article-list/article-list.component';
+import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +31,13 @@ import { NewsSearchComponent } from './components/news-search/news-search.compon
     NewsListComponent,
     AboutComponent,
     ArticleDetailsComponent,
-    NewsSearchComponent
+    NewsSearchComponent,
+    ButlerNewsCardComponent,
+    AppBarComponent,
+    SidebarNavComponent,
+    BottomNavComponent,
+    ArticleListComponent,
+    ArticleDetailComponent
   ],
   imports: [
     BrowserModule,

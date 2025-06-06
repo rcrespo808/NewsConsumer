@@ -1,0 +1,108 @@
+@import '../../../styles/butler-theme.scss';
+
+.butler-app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $primary;
+  color: $tertiary;
+  padding: 0 2rem;
+  height: 80px;
+  box-shadow: 0 2px 8px rgba($primary, 0.08);
+  position: relative;
+  z-index: 10;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
+
+.app-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.butler-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid $tertiary;
+  background: $surface;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba($primary, 0.10);
+}
+
+.app-title {
+  font-family: $font-header;
+  font-size: 2rem;
+  font-weight: $weight-bold;
+  color: $tertiary;
+  letter-spacing: 1px;
+}
+
+.app-bar-search {
+  display: flex;
+  align-items: center;
+  background: $background;
+  border: 2px solid $tertiary;
+  border-radius: 2rem;
+  padding: 0.25rem 1rem;
+  box-shadow: none;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  margin-left: 2rem;
+
+  &:focus-within {
+    box-shadow: 0 0 0 3px rgba($tertiary, 0.25);
+    border-color: darken($tertiary, 10%);
+  }
+
+  @media (max-width: 700px) {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+.butler-search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: $font-body;
+  font-size: 1.1rem;
+  color: $text-primary;
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  width: 220px;
+
+  &::placeholder {
+    color: $secondary;
+    opacity: 0.8;
+    font-family: $font-header;
+  }
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+}
+
+.butler-search-btn {
+  background: none;
+  border: none;
+  color: $secondary;
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+
+  &:hover,
+  &:focus {
+    color: $tertiary;
+    text-shadow: 0 0 8px $tertiary;
+  }
+} 

@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SecurityContext } from '@angular/core';
 import { Article } from '../../models/article.interface';
 import { ArticleStateService } from '../../services/article-state.service';
 
@@ -14,7 +16,8 @@ export class ArticleDetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private articleState: ArticleStateService
+    private articleState: ArticleStateService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -23,6 +26,11 @@ export class ArticleDetailsComponent {
       console.warn('No article data for id', id);
       return;
     }
+    const sanitized = this.sanitizer.sanitize(
+      SecurityContext.HTML,
+      this.article.content || ''
+    ) || '';
+    this.safeContent = this.sanitizer.bypassSecurityTrustHtml(sanitized);
     window.scroll({ top: 0, behavior: 'smooth' });
   }
 

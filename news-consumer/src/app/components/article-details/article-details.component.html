@@ -1,4 +1,16 @@
-<div class="article-details">
-  <h1>Article Details</h1>
-  <p>Showing details for article ID: {{ articleId }}</p>
+<div class="detail-container" *ngIf="article">
+  <a class="back-link" (click)="backToList()">&larr; Back to list</a>
+  <h1 class="headline">{{ article.title }}</h1>
+  <p class="meta">
+    <span class="author" *ngIf="article.author">{{ article.author }}</span>
+    <span class="source">{{ article.source.name }}</span>
+    <span class="date">{{ article.publishedAt | date:'medium' }}</span>
+  </p>
+  <img *ngIf="article.urlToImage" [src]="article.urlToImage" [alt]="article.title">
+  <div class="content" [innerHTML]="safeContent"></div>
+  <a class="external" [href]="article.url" target="_blank">Read original</a>
+</div>
+
+<div class="no-article" *ngIf="!article">
+  <p>Article data not found.</p>
 </div>

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NewsService } from '../../services/news.service';
 import { Article } from '../../models/article.interface';
+import { ArticleStateService } from '../../services/article-state.service';
 
 @Component({
   selector: 'app-news-list',
   template: `
     <div class="news-container">
-      <mat-card *ngFor="let article of articles" class="news-card">
+      <mat-card *ngFor="let article of articles; let i = index" class="news-card">
         <mat-card-header>
           <mat-card-title>{{ article.title }}</mat-card-title>
           <mat-card-subtitle>
@@ -24,12 +26,11 @@ import { Article } from '../../models/article.interface';
         </mat-card-content>
         
         <mat-card-actions>
-          <a mat-button 
-             [href]="article.url" 
-             target="_blank" 
-             color="primary">
+          <button mat-button
+                  color="primary"
+                  (click)="openArticle(article, i)">
             READ MORE
-          </a>
+          </button>
         </mat-card-actions>
       </mat-card>
     </div>
@@ -61,7 +62,11 @@ import { Article } from '../../models/article.interface';
 export class NewsListComponent implements OnInit {
   articles: Article[] = [];
 
-  constructor(private newsService: NewsService) {}
+  constructor(
+    private newsService: NewsService,
+    private articleState: ArticleStateService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadLatestNews();
@@ -87,5 +92,10 @@ export class NewsListComponent implements OnInit {
         console.error('Error searching news:', error);
       }
     );
+  }
+
+  openArticle(article: Article, index: number) {
+    this.articleState.setArticle(article);
+    this.router.navigate(['/article', index]);
   }
 }

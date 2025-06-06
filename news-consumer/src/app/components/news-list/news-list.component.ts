@@ -92,8 +92,6 @@ export class NewsListComponent implements OnInit {
     private newsService: NewsService,
     private searchService: SearchService,
     private prefs: PreferencesService
-
-    private aggregator: NewsAggregatorService
   ) {}
 
   ngOnInit() {
@@ -101,7 +99,7 @@ export class NewsListComponent implements OnInit {
     this.searchService.searchTerm$.subscribe((term: string) => {
       this.searchArticles(term);
     });
-    this.prefs.sourceChange$.subscribe(() => this.loadArticles());
+    this.prefs.enabledSources$.subscribe(() => this.loadArticles());
   }
 
   loadArticles() {

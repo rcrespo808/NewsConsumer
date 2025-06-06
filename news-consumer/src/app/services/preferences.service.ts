@@ -27,7 +27,7 @@ export class PreferencesService {
 
   private loadEnabledSources(): string[] {
     const stored = localStorage.getItem(this.STORAGE_KEY);
-    return stored ? JSON.parse(stored) : ['the-news-api'];
+    return stored ? JSON.parse(stored) : ['the-news-api', 'newsapi-org'];
   }
 
   private saveEnabledSources(ids: string[]): void {

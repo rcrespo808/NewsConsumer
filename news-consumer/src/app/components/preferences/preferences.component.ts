@@ -214,28 +214,16 @@ export class PreferencesComponent implements OnInit {
   isDarkMode = false;
   newsSources: NewsSource[] = [
     {
-      id: 'newsapi',
-      name: 'News API',
+      id: 'the-news-api',
+      name: 'The News API',
       enabled: true,
-      description: 'Global news coverage from various sources'
+      description: 'Top stories powered by The News API'
     },
     {
-      id: 'guardian',
-      name: 'The Guardian',
-      enabled: false,
-      description: 'International news and opinion'
-    },
-    {
-      id: 'nyt',
-      name: 'The New York Times',
-      enabled: false,
-      description: 'Breaking news, reviews and opinion'
-    },
-    {
-      id: 'reuters',
-      name: 'Reuters',
-      enabled: false,
-      description: 'Business, financial and world news'
+      id: 'newsapi-org',
+      name: 'NewsAPI.org',
+      enabled: true,
+      description: 'Headlines and articles from NewsAPI.org'
     }
   ];
 

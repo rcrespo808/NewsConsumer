@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../../services/news.service';
+import { NewsAggregatorService } from '../../services/news-aggregator.service';
 import { SearchService } from '../../services/search.service';
 import { Article } from '../../models/article.interface';
 
@@ -87,7 +88,8 @@ export class NewsListComponent implements OnInit {
 
   constructor(
     private newsService: NewsService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private aggregator: NewsAggregatorService
   ) {}
 
   ngOnInit() {
@@ -101,9 +103,9 @@ export class NewsListComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.newsService.getLatestNews().subscribe({
-      next: (response) => {
-        this.articles = response.articles;
+    this.aggregator.getCombinedNews().subscribe({
+      next: (articles) => {
+        this.articles = articles;
         this.selectedArticle = null;
         this.loading = false;
       },

@@ -1,12 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
-interface NewsSource {
+interface NewsSourcePref {
   id: string;
   name: string;
   enabled: boolean;
   description: string;
 }
+
+const SOURCE_METADATA: Record<string, { name: string; description: string }> = {
+  theNewsApi: {
+    name: 'The News API',
+    description: 'Free worldwide news API with 40,000+ sources.'
+  },
+  newsApiOrg: {
+    name: 'NewsAPI.org',
+    description: 'Popular news API with global coverage.'
+  }
+};
 
 @Component({
   selector: 'app-preferences',
@@ -211,32 +223,7 @@ interface NewsSource {
 })
 export class PreferencesComponent implements OnInit {
   isDarkMode = false;
-  newsSources: NewsSource[] = [
-    {
-      id: 'newsapi',
-      name: 'News API',
-      enabled: true,
-      description: 'Global news coverage from various sources'
-    },
-    {
-      id: 'guardian',
-      name: 'The Guardian',
-      enabled: false,
-      description: 'International news and opinion'
-    },
-    {
-      id: 'nyt',
-      name: 'The New York Times',
-      enabled: false,
-      description: 'Breaking news, reviews and opinion'
-    },
-    {
-      id: 'reuters',
-      name: 'Reuters',
-      enabled: false,
-      description: 'Business, financial and world news'
-    }
-  ];
+  newsSources: NewsSourcePref[] = [];
 
   constructor(private router: Router) {}
 
@@ -246,9 +233,26 @@ export class PreferencesComponent implements OnInit {
     this.isDarkMode = savedTheme === 'dark';
     this.applyTheme();
 
+    // Dynamically build sources from environment
+    const envSources = environment.newsSources;
+    const detectedSources: NewsSourcePref[] = Object.entries(envSources).map(([id, _]) => ({
+      id,
+      name: SOURCE_METADATA[id]?.name || id,
+      enabled: true,
+      description: SOURCE_METADATA[id]?.description || ''
+    }));
+
     const savedSources = localStorage.getItem('newsSources');
     if (savedSources) {
-      this.newsSources = JSON.parse(savedSources);
+      // Merge saved enabled state with detected sources
+      const savedArr: NewsSourcePref[] = JSON.parse(savedSources);
+      this.newsSources = detectedSources.map(src => {
+        const saved = savedArr.find(s => s.id === src.id);
+        return saved ? { ...src, enabled: saved.enabled } : src;
+      });
+    } else {
+      this.newsSources = detectedSources;
+      localStorage.setItem('newsSources', JSON.stringify(this.newsSources));
     }
   }
 
@@ -267,10 +271,10 @@ export class PreferencesComponent implements OnInit {
     document.body.classList.toggle('dark-theme', this.isDarkMode);
   }
 
-  updateSource(source: NewsSource, event: Event) {
+  updateSource(source: NewsSourcePref, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     source.enabled = checkbox.checked;
     localStorage.setItem('newsSources', JSON.stringify(this.newsSources));
-    // TODO: Emit event to notify news service about source changes
+    // TODO: Emit event to notify aggregator/news service about source changes
   }
 } 

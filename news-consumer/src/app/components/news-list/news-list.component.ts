@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsService } from '../../services/news.service';
+import { NewsAggregatorService } from '../../services/news-aggregator.service';
 import { Article } from '../../models/article.interface';
 
 @Component({
@@ -15,8 +15,12 @@ import { Article } from '../../models/article.interface';
         <button class="retry-button" (click)="loadArticles()">Retry</button>
       </div>
 
+      <div *ngIf="!loading && !error && articles.length === 0" class="no-sources-container">
+        <span class="no-sources-text">No news sources are enabled. Please enable at least one source in Preferences.</span>
+      </div>
+
       <app-article-list 
-        *ngIf="!loading && !error"
+        *ngIf="!loading && !error && articles.length > 0"
         [articles]="articles" 
         (articleSelected)="onArticleClick($event)">
       </app-article-list>
@@ -76,6 +80,9 @@ import { Article } from '../../models/article.interface';
       padding: 1.5rem;
       margin-top: 2rem;
     }
+
+    .no-sources-container { display: flex; justify-content: center; align-items: center; padding: 2rem; text-align: center; }
+    .no-sources-text { color: #888; font-size: 1.1rem; }
   `]
 })
 export class NewsListComponent implements OnInit {
@@ -84,7 +91,7 @@ export class NewsListComponent implements OnInit {
   loading = false;
   error: string | null = null;
 
-  constructor(private newsService: NewsService) {}
+  constructor(private aggregator: NewsAggregatorService) {}
 
   ngOnInit() {
     this.loadArticles();
@@ -94,9 +101,9 @@ export class NewsListComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.newsService.getLatestNews().subscribe({
-      next: (response) => {
-        this.articles = response.articles;
+    this.aggregator.getLatestNews().subscribe({
+      next: (articles) => {
+        this.articles = articles;
         this.selectedArticle = null;
         this.loading = false;
       },

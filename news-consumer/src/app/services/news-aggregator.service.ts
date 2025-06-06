@@ -25,7 +25,11 @@ export class NewsAggregatorService {
           map(results =>
             results
               .reduce((acc, cur) => acc.concat(cur), [])
-              .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
+
+              .sort(
+                (a, b) =>
+                  b.publishedAt.getTime() - a.publishedAt.getTime()
+              )
           )
         );
       })

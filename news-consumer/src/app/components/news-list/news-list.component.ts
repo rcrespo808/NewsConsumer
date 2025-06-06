@@ -92,6 +92,8 @@ export class NewsListComponent implements OnInit {
     private newsService: NewsService,
     private searchService: SearchService,
     private prefs: PreferencesService
+
+    private aggregator: NewsAggregatorService
   ) {}
 
   ngOnInit() {

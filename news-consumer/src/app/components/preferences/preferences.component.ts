@@ -224,7 +224,7 @@ const SOURCE_METADATA: Record<string, { name: string; description: string }> = {
 })
 export class PreferencesComponent implements OnInit {
   isDarkMode = false;
-  newsSources: NewsSource[] = [
+  newsSources: NewsSourcePref[] = [
     {
       id: 'the-news-api',
       name: 'The News API',

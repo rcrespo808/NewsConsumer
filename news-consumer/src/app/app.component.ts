@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Article } from './models/article.interface';
-import { NewsService } from './services/news.service';
 import { SearchService } from './services/search.service';
 import { AppBarComponent } from './components/app-bar/app-bar.component';
 import { SidebarNavComponent } from './components/sidebar-nav/sidebar-nav.component';
@@ -69,7 +68,6 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   constructor(
-    private newsService: NewsService,
     private searchService: SearchService
   ) {}
 

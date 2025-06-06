@@ -41,4 +41,3 @@ includes a token for **The News API**.
 - Maintainability and organization
 
 
-See [docs/styleguide.md](docs/styleguide.md) for the UI styleguide.

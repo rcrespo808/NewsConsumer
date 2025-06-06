@@ -14,10 +14,6 @@ const SOURCE_METADATA: Record<string, { name: string; description: string }> = {
   theNewsApi: {
     name: 'The News API',
     description: 'Free worldwide news API with 40,000+ sources.'
-  },
-  newsApiOrg: {
-    name: 'NewsAPI.org',
-    description: 'Popular news API with global coverage.'
   }
 };
 
@@ -231,12 +227,6 @@ export class PreferencesComponent implements OnInit {
       enabled: true,
       description: 'Top stories powered by The News API'
     },
-    {
-      id: 'newsapi-org',
-      name: 'NewsAPI.org',
-      enabled: true,
-      description: 'Headlines and articles from NewsAPI.org'
-    }
   ];
 
   constructor(

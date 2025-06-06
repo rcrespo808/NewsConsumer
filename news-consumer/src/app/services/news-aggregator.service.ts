@@ -3,7 +3,6 @@ import { Observable, forkJoin, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Article } from '../models/article.interface';
 import { TheNewsApiService } from './the-news-api.service';
-// import { NewsApiOrgService } from './newsapi-org.service'; // For future expansion
 import { NewsSource } from './news-source.interface';
 
 @Injectable({ providedIn: 'root' })
@@ -12,11 +11,9 @@ export class NewsAggregatorService {
 
   constructor(
     private theNewsApi: TheNewsApiService,
-    // private newsApiOrg: NewsApiOrgService
   ) {
     this.sources = {
       theNewsApi: this.theNewsApi,
-      // newsApiOrg: this.newsApiOrg
     };
   }
 

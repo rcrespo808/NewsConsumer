@@ -82,7 +82,6 @@ export class NewsListComponent implements OnInit {
     // Map to display names
     const sourceMeta: Record<string, string> = {
       theNewsApi: 'The News API',
-      newsApiOrg: 'NewsAPI.org'
     };
     this.enabledSources = enabled.map(id => ({ id, name: sourceMeta[id] || id }));
   }

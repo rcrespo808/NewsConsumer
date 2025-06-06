@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from '../../models/article.interface';
-import { ArticleStateService } from '../../services/article-state.service';
 
 @Component({
   selector: 'app-article-details',
@@ -13,8 +12,7 @@ export class ArticleDetailsComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private articleState: ArticleStateService
+    private router: Router
   ) {}
 
   ngOnInit(): void {

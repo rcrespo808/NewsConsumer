@@ -9,11 +9,9 @@ import { NewsSource } from './news-source.interface';
 export class NewsAggregatorService {
   private sources: { [id: string]: NewsSource };
 
-  constructor(
-    private theNewsApi: TheNewsApiService,
-  ) {
+  constructor(private theNewsApi: TheNewsApiService) {
     this.sources = {
-      theNewsApi: this.theNewsApi,
+      theNewsApi: this.theNewsApi
     };
   }
 
@@ -29,14 +27,13 @@ export class NewsAggregatorService {
   }
 
   getLatestNews(): Observable<Article[]> {
-    const enabledIds = this.getEnabledSourceIds();
+    const enabledIds: string[] = this.getEnabledSourceIds();
     if (enabledIds.length === 0) {
-      // All sources disabled
       return of([]);
     }
-    const observables = enabledIds
-      .filter(id => this.sources[id])
-      .map(id => this.sources[id].getLatestNews().pipe(
+    const observables: Observable<Article[]>[] = enabledIds
+      .filter((id: string) => this.sources[id])
+      .map((id: string) => this.sources[id].getLatestNews().pipe(
         catchError(() => of([]))
       ));
     return forkJoin(observables).pipe(
@@ -45,14 +42,13 @@ export class NewsAggregatorService {
   }
 
   searchNews(keyword: string): Observable<Article[]> {
-    const enabledIds = this.getEnabledSourceIds();
+    const enabledIds: string[] = this.getEnabledSourceIds();
     if (enabledIds.length === 0) {
-      // All sources disabled
       return of([]);
     }
-    const observables = enabledIds
-      .filter(id => this.sources[id])
-      .map(id => this.sources[id].searchNews(keyword).pipe(
+    const observables: Observable<Article[]>[] = enabledIds
+      .filter((id: string) => this.sources[id])
+      .map((id: string) => this.sources[id].searchNews(keyword).pipe(
         catchError(() => of([]))
       ));
     return forkJoin(observables).pipe(

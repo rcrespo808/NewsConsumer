@@ -21,21 +21,13 @@ interface SourceOption {
         <button class="retry-button" (click)="loadArticles()">Retry</button>
       </div>
 
-      <div *ngIf="!loading && !error && enabledSources.length > 1 && articles.length > 0" class="source-filter-container">
-        <label for="sourceFilter">Filter by source:</label>
-        <select id="sourceFilter" [(ngModel)]="selectedSourceId" (ngModelChange)="applySourceFilter()">
-          <option value="">All</option>
-          <option *ngFor="let source of enabledSources" [value]="source.id">{{ source.name }}</option>
-        </select>
-      </div>
-
       <div *ngIf="!loading && !error && articles.length === 0" class="no-sources-container">
         <span class="no-sources-text">No news sources are enabled. Please enable at least one source in Preferences.</span>
       </div>
 
       <app-article-list 
-        *ngIf="!loading && !error && filteredArticles.length > 0"
-        [articles]="filteredArticles" 
+        *ngIf="!loading && !error && articles.length > 0"
+        [articles]="articles" 
         (articleSelected)="onArticleClick($event)">
       </app-article-list>
 
@@ -81,7 +73,7 @@ export class NewsListComponent implements OnInit {
     const enabled = this.prefs.getEnabledSources();
     // Map to display names
     const sourceMeta: Record<string, string> = {
-      theNewsApi: 'The News API',
+      theNewsApi: 'The News API'
     };
     this.enabledSources = enabled.map(id => ({ id, name: sourceMeta[id] || id }));
   }
@@ -91,26 +83,17 @@ export class NewsListComponent implements OnInit {
     this.error = null;
 
     this.aggregator.getLatestNews().subscribe({
-      next: (articles) => {
+      next: (articles: Article[]) => {
         this.articles = articles;
-        this.applySourceFilter();
         this.selectedArticle = null;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.error = 'Failed to load news articles. Please try again.';
         this.loading = false;
         console.error('Error loading news:', err);
       }
     });
-  }
-
-  applySourceFilter() {
-    if (!this.selectedSourceId) {
-      this.filteredArticles = this.articles;
-    } else {
-      this.filteredArticles = this.articles.filter(a => a.source === this.selectedSourceId);
-    }
   }
 
   onArticleClick(article: Article) {

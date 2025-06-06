@@ -48,10 +48,6 @@ const SOURCE_METADATA: Record<string, { name: string; description: string }> = {
               <h3>{{ source.name }}</h3>
               <p>{{ source.description }}</p>
             </div>
-            <label class="switch">
-              <input type="checkbox" [checked]="source.enabled" (change)="updateSource(source, $event)">
-              <span class="slider round"></span>
-            </label>
           </div>
         </div>
       </section>

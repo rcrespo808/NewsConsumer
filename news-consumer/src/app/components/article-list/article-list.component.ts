@@ -6,18 +6,7 @@ import { Article } from '../../models/article.interface';
   template: `
     <section class="butler-article-list">
       <ng-container *ngIf="articles && articles.length; else placeholderList">
-        <div *ngFor="let article of articles" class="butler-article-card" (click)="selectArticle(article)">
-          <div class="card-thumb-wrapper">
-            <img *ngIf="article.urlToImage; else thumbPlaceholder" [src]="article.urlToImage" [alt]="article.title" class="card-thumb" (error)="onImgError($event)">
-            <ng-template #thumbPlaceholder>
-              <div class="card-thumb card-thumb-placeholder"></div>
-            </ng-template>
-          </div>
-          <div class="card-content">
-            <div class="card-title">{{ article.title }}</div>
-            <div class="card-excerpt">{{ article.description || article.content || '' }}</div>
-          </div>
-        </div>
+        <app-butler-news-card *ngFor="let article of articles" [article]="article" (cardClick)="selectArticle(article)"></app-butler-news-card>
       </ng-container>
       <ng-template #placeholderList>
         <div *ngFor="let n of [1,2,3,4]" class="butler-article-card placeholder">

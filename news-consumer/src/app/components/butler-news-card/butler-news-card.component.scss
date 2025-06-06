@@ -1,0 +1,86 @@
+@import '../../../styles/butler-theme.scss';
+
+.news-card-header {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.news-card-image-wrapper {
+  flex: 0 0 120px;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: $surface;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.news-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba($primary, 0.08);
+}
+
+.news-card-meta {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.article-title {
+  @extend .article-title;
+  margin-bottom: 0.25rem;
+}
+
+.meta {
+  @extend .meta;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.timestamp {
+  @extend .timestamp;
+}
+
+.news-card-body {
+  margin-bottom: 1rem;
+}
+
+.lead {
+  font-style: italic;
+  color: $secondary;
+}
+
+.news-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid $tertiary;
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.caption {
+  @extend .caption;
+}
+
+@media (max-width: 600px) {
+  .news-card-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .news-card-image-wrapper {
+    width: 100%;
+    height: 180px;
+    margin-bottom: 0.5rem;
+  }
+} 

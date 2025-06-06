@@ -154,10 +154,12 @@ Font sizes and weights:
 | Loading | Spinning pocket watch or elegant shimmer |
 
 ### Dark Mode (optional)
-* Background `#1B1A17`
-* Surface `#2E2A25`
-* Text `#F3EFE7`
+* Background `#2E2A25`
+* Surface `#5E5347`
+* Primary text `#F3EFE7`
+* Secondary text `#D2C7B8`
 * Accent `#C0A97D`
+* Error `#8A3A3A`
 
 ## Brand Feel
 Tone is informed, classy, and trustworthy—like a valet reporting world affairs.

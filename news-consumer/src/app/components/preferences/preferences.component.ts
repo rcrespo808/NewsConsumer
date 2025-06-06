@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PreferencesService } from '../../services/preferences.service';
 
 interface NewsSource {
   id: string;
@@ -238,7 +239,10 @@ export class PreferencesComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private prefs: PreferencesService
+  ) {}
 
   ngOnInit() {
     // Load saved preferences
@@ -250,6 +254,7 @@ export class PreferencesComponent implements OnInit {
     if (savedSources) {
       this.newsSources = JSON.parse(savedSources);
     }
+    this.prefs.updateSources(this.newsSources);
   }
 
   goBack() {
@@ -270,7 +275,6 @@ export class PreferencesComponent implements OnInit {
   updateSource(source: NewsSource, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     source.enabled = checkbox.checked;
-    localStorage.setItem('newsSources', JSON.stringify(this.newsSources));
-    // TODO: Emit event to notify news service about source changes
+    this.prefs.updateSources(this.newsSources);
   }
-} 
+}

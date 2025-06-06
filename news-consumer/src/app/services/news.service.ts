@@ -9,8 +9,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class NewsService {
-  private readonly API_KEY = environment.newsApi.token;
-  private readonly BASE_URL = environment.newsApi.baseUrl;
+  private readonly API_KEY = environment.newsSources.theNewsApi.token;
+  private readonly BASE_URL = environment.newsSources.theNewsApi.baseUrl;
 
   constructor(private http: HttpClient) { }
 

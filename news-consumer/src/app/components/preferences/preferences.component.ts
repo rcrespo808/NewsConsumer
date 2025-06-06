@@ -241,7 +241,7 @@ export class PreferencesComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private prefs: PreferencesService
+    private preferencesService: PreferencesService
   ) {}
 
   ngOnInit() {
@@ -250,11 +250,11 @@ export class PreferencesComponent implements OnInit {
     this.isDarkMode = savedTheme === 'dark';
     this.applyTheme();
 
-    const savedSources = localStorage.getItem('newsSources');
-    if (savedSources) {
-      this.newsSources = JSON.parse(savedSources);
-    }
-    this.prefs.updateSources(this.newsSources);
+    const enabled = this.preferencesService.getEnabledSources();
+    this.newsSources = this.newsSources.map(s => ({
+      ...s,
+      enabled: enabled.includes(s.id)
+    }));
   }
 
   goBack() {
@@ -275,6 +275,6 @@ export class PreferencesComponent implements OnInit {
   updateSource(source: NewsSource, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     source.enabled = checkbox.checked;
-    this.prefs.updateSources(this.newsSources);
+    this.preferencesService.toggleSource(source.id, source.enabled);
   }
 }

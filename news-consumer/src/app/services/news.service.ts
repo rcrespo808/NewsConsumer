@@ -9,8 +9,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class NewsService {
-  private readonly API_KEY = environment.newsApi.token;
-  private readonly BASE_URL = environment.newsApi.baseUrl;
+  private readonly API_KEY = environment.newsSources.theNewsApi.token;
+  private readonly BASE_URL = environment.newsSources.theNewsApi.baseUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -61,7 +61,7 @@ export class NewsService {
       .set('limit', '10');
 
     return this.http.get<any>(`${this.BASE_URL}/news/top`, { params }).pipe(
-      map(response => ({
+      map((response: any) => ({
         articles: response.data.map((item: any) => ({
           title: item.title,
           description: item.description,
@@ -83,7 +83,7 @@ export class NewsService {
       .set('limit', '10');
 
     return this.http.get<any>(`${this.BASE_URL}/news/search`, { params }).pipe(
-      map(response => ({
+      map((response: any) => ({
         articles: response.data.map((item: any) => ({
           title: item.title,
           description: item.description,

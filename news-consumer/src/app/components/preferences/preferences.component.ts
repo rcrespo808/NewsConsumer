@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PreferencesService } from '../../services/preferences.service';
 
 interface NewsSource {
   id: string;
@@ -238,7 +239,10 @@ export class PreferencesComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private preferencesService: PreferencesService
+  ) {}
 
   ngOnInit() {
     // Load saved preferences
@@ -246,10 +250,11 @@ export class PreferencesComponent implements OnInit {
     this.isDarkMode = savedTheme === 'dark';
     this.applyTheme();
 
-    const savedSources = localStorage.getItem('newsSources');
-    if (savedSources) {
-      this.newsSources = JSON.parse(savedSources);
-    }
+    const enabled = this.preferencesService.getEnabledSources();
+    this.newsSources = this.newsSources.map(s => ({
+      ...s,
+      enabled: enabled.includes(s.id)
+    }));
   }
 
   goBack() {
@@ -270,7 +275,6 @@ export class PreferencesComponent implements OnInit {
   updateSource(source: NewsSource, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     source.enabled = checkbox.checked;
-    localStorage.setItem('newsSources', JSON.stringify(this.newsSources));
-    // TODO: Emit event to notify news service about source changes
+    this.preferencesService.toggleSource(source.id, source.enabled);
   }
-} 
+}

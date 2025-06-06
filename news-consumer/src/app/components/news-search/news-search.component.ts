@@ -32,7 +32,7 @@ export class NewsSearchComponent {
         debounceTime(300),
         distinctUntilChanged()
       )
-      .subscribe(value => {
+      .subscribe((value: string) => {
         if (value) {
           this.search.emit(value);
         }

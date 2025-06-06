@@ -25,6 +25,8 @@ import { BottomNavComponent } from './components/bottom-nav/bottom-nav.component
 import { ArticleListComponent } from './components/article-list/article-list.component';
 import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
+import { NEWS_SOURCE } from './services/news-source.interface';
+import { TheNewsApiService } from './services/the-news-api.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { PreferencesComponent } from './components/preferences/preferences.compo
     MatInputModule,
     MatFormFieldModule
   ],
-  providers: [],
+  providers: [
+    { provide: NEWS_SOURCE, useExisting: TheNewsApiService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

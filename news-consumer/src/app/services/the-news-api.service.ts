@@ -12,8 +12,8 @@ import { NewsSource } from './news-source.interface';
 export class TheNewsApiService implements NewsSource {
   id = 'the-news-api';
   displayName = 'The News API';
-  private readonly API_KEY = environment.newsApi.token;
-  private readonly BASE_URL = environment.newsApi.baseUrl;
+  private readonly API_KEY = environment.newsSources.theNewsApi.token;
+  private readonly BASE_URL = environment.newsSources.theNewsApi.baseUrl;
 
   constructor(private http: HttpClient) {}
 

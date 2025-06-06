@@ -24,7 +24,7 @@ export class TheNewsApiService implements NewsSource {
       .set('limit', '10');
 
     return this.http.get<any>(`${this.BASE_URL}/news/top`, { params }).pipe(
-      map(response => response.data.map((item: any) => ({
+      map((response: any) => response.data.map((item: any) => ({
         title: item.title,
         description: item.description,
         url: item.url,
@@ -44,7 +44,7 @@ export class TheNewsApiService implements NewsSource {
       .set('limit', '10');
 
     return this.http.get<any>(`${this.BASE_URL}/news/search`, { params }).pipe(
-      map(response => response.data.map((item: any) => ({
+      map((response: any) => response.data.map((item: any) => ({
         title: item.title,
         description: item.description,
         url: item.url,

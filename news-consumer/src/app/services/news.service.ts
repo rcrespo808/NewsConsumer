@@ -61,7 +61,7 @@ export class NewsService {
       .set('limit', '10');
 
     return this.http.get<any>(`${this.BASE_URL}/news/top`, { params }).pipe(
-      map(response => ({
+      map((response: any) => ({
         articles: response.data.map((item: any) => ({
           title: item.title,
           description: item.description,
@@ -83,7 +83,7 @@ export class NewsService {
       .set('limit', '10');
 
     return this.http.get<any>(`${this.BASE_URL}/news/search`, { params }).pipe(
-      map(response => ({
+      map((response: any) => ({
         articles: response.data.map((item: any) => ({
           title: item.title,
           description: item.description,

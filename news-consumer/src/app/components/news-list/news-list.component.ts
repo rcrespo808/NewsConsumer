@@ -96,7 +96,7 @@ export class NewsListComponent implements OnInit {
 
   ngOnInit() {
     this.loadArticles();
-    this.searchService.searchTerm$.subscribe(term => {
+    this.searchService.searchTerm$.subscribe((term: string) => {
       this.searchArticles(term);
     });
     this.prefs.sourceChange$.subscribe(() => this.loadArticles());
@@ -107,12 +107,12 @@ export class NewsListComponent implements OnInit {
     this.error = null;
 
     this.aggregator.getCombinedNews().subscribe({
-      next: (articles) => {
+      next: (articles: Article[]) => {
         this.articles = articles;
         this.selectedArticle = null;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: unknown) => {
         this.error = 'Failed to load news articles. Please try again.';
         this.loading = false;
         console.error('Error loading news:', err);
@@ -125,12 +125,12 @@ export class NewsListComponent implements OnInit {
     this.error = null;
 
     this.newsService.searchNews(keyword).subscribe({
-      next: (response) => {
+      next: (response: { articles: Article[] }) => {
         this.articles = response.articles;
         this.selectedArticle = null;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: unknown) => {
         this.error = 'Failed to load news articles. Please try again.';
         this.loading = false;
         console.error('Error searching news:', err);

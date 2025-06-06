@@ -29,11 +29,12 @@ export class NewsAggregatorService {
     }
 
     return forkJoin(requests).pipe(
-      map(results =>
+      map((results: Article[][]) =>
         results
-          .reduce((all, cur) => all.concat(cur), [])
+          .reduce((all: Article[], cur: Article[]) => all.concat(cur), [])
           .sort(
-            (a, b) => b.publishedAt.getTime() - a.publishedAt.getTime()
+            (a: Article, b: Article) =>
+              b.publishedAt.getTime() - a.publishedAt.getTime()
           )
       )
     );

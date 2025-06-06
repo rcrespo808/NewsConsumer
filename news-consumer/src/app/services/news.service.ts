@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { NewsResponse, Article, SourcesResponse, NewsApiParams } from '../models/article.interface';
 import { environment } from '../../environments/environment';
 
@@ -8,8 +9,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class NewsService {
-  private apiKey = environment.newsApi.token;
-  private baseUrl = environment.newsApi.baseUrl;
+  private readonly API_KEY = environment.newsApi.token;
+  private readonly BASE_URL = environment.newsApi.baseUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -22,22 +23,22 @@ export class NewsService {
       }
     });
     
-    return httpParams.set('apiKey', this.apiKey);
+    return httpParams.set('apiKey', this.API_KEY);
   }
 
   getTopHeadlines(params: NewsApiParams = {}): Observable<NewsResponse> {
     const httpParams = this.createParams(params);
-    return this.http.get<NewsResponse>(`${this.baseUrl}/top-headlines`, { params: httpParams });
+    return this.http.get<NewsResponse>(`${this.BASE_URL}/top-headlines`, { params: httpParams });
   }
 
   searchEverything(params: NewsApiParams): Observable<NewsResponse> {
     const httpParams = this.createParams(params);
-    return this.http.get<NewsResponse>(`${this.baseUrl}/everything`, { params: httpParams });
+    return this.http.get<NewsResponse>(`${this.BASE_URL}/everything`, { params: httpParams });
   }
 
   getSources(params: { category?: string; language?: string; country?: string } = {}): Observable<SourcesResponse> {
     const httpParams = this.createParams(params);
-    return this.http.get<SourcesResponse>(`${this.baseUrl}/top-headlines/sources`, { params: httpParams });
+    return this.http.get<SourcesResponse>(`${this.BASE_URL}/top-headlines/sources`, { params: httpParams });
   }
 
   // Helper methods for common use cases
@@ -53,13 +54,52 @@ export class NewsService {
     return this.searchEverything({ q: keyword });
   }
 
-  getLatestNews(): Observable<NewsResponse> {
-    return this.getTopHeadlines({ country: 'us', pageSize: 10 });
+  getLatestNews(): Observable<{ articles: Article[] }> {
+    const params = new HttpParams()
+      .set('api_token', this.API_KEY)
+      .set('language', 'en')
+      .set('limit', '10');
+
+    return this.http.get<any>(`${this.BASE_URL}/news/top`, { params }).pipe(
+      map(response => ({
+        articles: response.data.map((item: any) => ({
+          title: item.title,
+          description: item.description,
+          url: item.url,
+          imageUrl: item.image_url,
+          publishedAt: new Date(item.published_at),
+          source: item.source,
+          categories: item.categories || []
+        }))
+      }))
+    );
+  }
+
+  searchNews(keyword: string): Observable<{ articles: Article[] }> {
+    const params = new HttpParams()
+      .set('api_token', this.API_KEY)
+      .set('language', 'en')
+      .set('search', keyword)
+      .set('limit', '10');
+
+    return this.http.get<any>(`${this.BASE_URL}/news/search`, { params }).pipe(
+      map(response => ({
+        articles: response.data.map((item: any) => ({
+          title: item.title,
+          description: item.description,
+          url: item.url,
+          imageUrl: item.image_url,
+          publishedAt: new Date(item.published_at),
+          source: item.source,
+          categories: item.categories || []
+        }))
+      }))
+    );
   }
 
   getArticleById(id: string): Observable<Article> {
     // Note: NewsAPI doesn't have a direct endpoint for single articles
     // This is a mock implementation that would need to be adjusted based on your needs
-    return this.http.get<Article>(`${this.baseUrl}/articles/${id}?apiKey=${this.apiKey}`);
+    return this.http.get<Article>(`${this.BASE_URL}/articles/${id}?apiKey=${this.API_KEY}`);
   }
 }

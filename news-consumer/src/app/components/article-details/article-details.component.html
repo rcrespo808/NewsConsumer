@@ -1,14 +1,9 @@
-<div class="detail-container" *ngIf="article">
-  <a class="back-link" (click)="backToList()">&larr; Back to list</a>
-  <h1 class="headline">{{ article.title }}</h1>
-  <p class="meta">
-    <span class="author" *ngIf="article.author">{{ article.author }}</span>
-    <span class="source">{{ article.source.name }}</span>
-    <span class="date">{{ article.publishedAt | date:'medium' }}</span>
-  </p>
-  <img *ngIf="article.urlToImage" [src]="article.urlToImage" [alt]="article.title">
-  <div class="content" [innerHTML]="safeContent"></div>
-  <a class="external" [href]="article.url" target="_blank">Read original</a>
+<div class="article-details" *ngIf="article">
+  <h2>{{ article.title }}</h2>
+  <span class="source" *ngIf="article.source">{{ article.source }}</span>
+  <img *ngIf="article.imageUrl" [src]="article.imageUrl" [alt]="article.title">
+  <p *ngIf="article.description">{{ article.description }}</p>
+  <a *ngIf="article.url" [href]="article.url" target="_blank" rel="noopener">Read full article</a>
 </div>
 
 <div class="no-article" *ngIf="!article">

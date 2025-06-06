@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Article } from '../../models/article.interface';
 
 @Component({
@@ -6,7 +6,7 @@ import { Article } from '../../models/article.interface';
   template: `
     <section class="butler-article-list">
       <ng-container *ngIf="articles && articles.length; else placeholderList">
-        <div *ngFor="let article of articles" class="butler-article-card">
+        <div *ngFor="let article of articles" class="butler-article-card" (click)="selectArticle(article)">
           <div class="card-thumb-wrapper">
             <img *ngIf="article.urlToImage; else thumbPlaceholder" [src]="article.urlToImage" [alt]="article.title" class="card-thumb" (error)="onImgError($event)">
             <ng-template #thumbPlaceholder>
@@ -36,8 +36,13 @@ import { Article } from '../../models/article.interface';
 })
 export class ArticleListComponent {
   @Input() articles: Article[] = [];
+  @Output() articleSelected = new EventEmitter<Article>();
 
   onImgError(event: Event) {
     (event.target as HTMLImageElement).style.display = 'none';
+  }
+
+  selectArticle(article: Article) {
+    this.articleSelected.emit(article);
   }
 } 

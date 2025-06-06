@@ -10,7 +10,7 @@ import { NewsService } from './services/news.service';
       <div class="butler-main-layout">
         <app-sidebar-nav class="sidebar-nav" (navigate)="onNavigate($event)"></app-sidebar-nav>
         <main class="main-content">
-          <app-article-list [articles]="articles" (click)="onArticleClick($event)"></app-article-list>
+          <app-article-list [articles]="articles" (articleSelected)="onArticleClick($event)"></app-article-list>
           <ng-container *ngIf="isMobile; else desktopDetail">
             <app-article-detail [article]="selectedArticle"></app-article-detail>
           </ng-container>

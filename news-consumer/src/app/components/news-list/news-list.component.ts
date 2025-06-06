@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../../services/news.service';
 import { SearchService } from '../../services/search.service';
 import { Article } from '../../models/article.interface';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-news-list',
@@ -119,18 +120,22 @@ export class NewsListComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.newsService.searchNews(keyword).subscribe({
-      next: (response) => {
-        this.articles = response.articles;
-        this.selectedArticle = null;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Failed to load news articles. Please try again.';
-        this.loading = false;
-        console.error('Error searching news:', err);
-      }
-    });
+    this.newsService.searchNews(keyword)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.selectedArticle = null;
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          this.articles = response.articles;
+        },
+        error: (err) => {
+          this.error = 'Failed to load news articles. Please try again.';
+          console.error('Error searching news:', err);
+        }
+      });
   }
 
   onArticleClick(article: Article) {

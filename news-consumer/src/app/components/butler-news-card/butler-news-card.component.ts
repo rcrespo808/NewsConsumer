@@ -19,7 +19,7 @@ import { Article } from '../../models/article.interface';
   `,
   styles: [`
     .news-card { display: flex; flex-direction: column; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); background: #fff; margin-bottom: 1rem; }
-    .news-card-image { width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; }
+    .news-card-image { width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 0.5rem; }
     .news-card-placeholder { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; background: #eee; color: #888; border-radius: 8px 8px 0 0; }
     .news-card-content { padding: 1rem; }
     .source { color: #888; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }

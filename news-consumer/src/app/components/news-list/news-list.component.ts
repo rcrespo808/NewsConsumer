@@ -23,7 +23,7 @@ interface SourceOption {
 
       <div *ngIf="!loading && !error && enabledSources.length > 1 && articles.length > 0" class="source-filter-container">
         <label for="sourceFilter">Filter by source:</label>
-        <select id="sourceFilter" [(ngModel)]="selectedSourceId">
+        <select id="sourceFilter" [(ngModel)]="selectedSourceId" (ngModelChange)="applySourceFilter()">
           <option value="">All</option>
           <option *ngFor="let source of enabledSources" [value]="source.id">{{ source.name }}</option>
         </select>

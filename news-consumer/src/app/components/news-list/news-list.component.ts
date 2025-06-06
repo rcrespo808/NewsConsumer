@@ -30,60 +30,17 @@ import { Article } from '../../models/article.interface';
       </div>
     </div>
   `,
-  styles: [`
-    .feed-container {
-      max-width: 800px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .loading-container,
-    .error-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .loading-text {
-      color: #666;
-      font-size: 1.1rem;
-    }
-
-    .error-text {
-      color: #dc3545;
-      margin-bottom: 1rem;
-    }
-
-    .retry-button {
-      padding: 0.5rem 1rem;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .retry-button:hover {
-      background-color: #0056b3;
-    }
-
-    .article-detail-container {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .no-sources-container { display: flex; justify-content: center; align-items: center; padding: 2rem; text-align: center; }
-    .no-sources-text { color: #888; font-size: 1.1rem; }
-  `]
+  styles: [
+    `.feed-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }`,
+    `.loading-container, .error-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center; }`,
+    `.loading-text { color: #666; font-size: 1.1rem; }`,
+    `.error-text { color: #dc3545; margin-bottom: 1rem; }`,
+    `.retry-button { padding: 0.5rem 1rem; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s; }`,
+    `.retry-button:hover { background-color: #0056b3; }`,
+    `.article-detail-container { background-color: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 1.5rem; margin-top: 2rem; }`,
+    `.no-sources-container { display: flex; justify-content: center; align-items: center; padding: 2rem; text-align: center; }`,
+    `.no-sources-text { color: #888; font-size: 1.1rem; }`
+  ]
 })
 export class NewsListComponent implements OnInit {
   articles: Article[] = [];

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { PreferencesService } from '../../services/preferences.service';
 
 interface NewsSourcePref {
   id: string;
@@ -225,7 +226,10 @@ export class PreferencesComponent implements OnInit {
   isDarkMode = false;
   newsSources: NewsSourcePref[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private preferencesService: PreferencesService
+  ) {}
 
   ngOnInit() {
     // Load saved preferences
@@ -242,18 +246,12 @@ export class PreferencesComponent implements OnInit {
       description: SOURCE_METADATA[id]?.description || ''
     }));
 
-    const savedSources = localStorage.getItem('newsSources');
-    if (savedSources) {
-      // Merge saved enabled state with detected sources
-      const savedArr: NewsSourcePref[] = JSON.parse(savedSources);
-      this.newsSources = detectedSources.map(src => {
-        const saved = savedArr.find(s => s.id === src.id);
-        return saved ? { ...src, enabled: saved.enabled } : src;
-      });
-    } else {
-      this.newsSources = detectedSources;
-      localStorage.setItem('newsSources', JSON.stringify(this.newsSources));
-    }
+    // Use PreferencesService to get enabled sources
+    const enabled = this.preferencesService.getEnabledSources();
+    this.newsSources = detectedSources.map(s => ({
+      ...s,
+      enabled: enabled.includes(s.id)
+    }));
   }
 
   goBack() {
@@ -274,7 +272,6 @@ export class PreferencesComponent implements OnInit {
   updateSource(source: NewsSourcePref, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     source.enabled = checkbox.checked;
-    localStorage.setItem('newsSources', JSON.stringify(this.newsSources));
-    // TODO: Emit event to notify aggregator/news service about source changes
+    this.preferencesService.toggleSource(source.id, source.enabled);
   }
-} 
+}

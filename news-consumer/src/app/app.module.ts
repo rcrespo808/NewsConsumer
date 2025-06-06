@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { NewsListComponent } from './components/news-list/news-list.component';
 import { AboutComponent } from './components/about/about.component';
 import { ArticleDetailsComponent } from './components/article-details/article-details.component';
-import { NewsSearchComponent } from './components/news-search/news-search.component';
 import { ButlerNewsCardComponent } from './components/butler-news-card/butler-news-card.component';
 import { AppBarComponent } from './components/app-bar/app-bar.component';
 import { SidebarNavComponent } from './components/sidebar-nav/sidebar-nav.component';
@@ -27,7 +26,6 @@ import { ArticleDetailComponent } from './components/article-detail/article-deta
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { NEWS_SOURCE } from './services/news-source.interface';
 import { TheNewsApiService } from './services/the-news-api.service';
-import { NewsApiOrgService } from './services/news-api-org.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +33,6 @@ import { NewsApiOrgService } from './services/news-api-org.service';
     NewsListComponent,
     AboutComponent,
     ArticleDetailsComponent,
-    NewsSearchComponent,
     ButlerNewsCardComponent,
     AppBarComponent,
     SidebarNavComponent,
@@ -62,7 +59,6 @@ import { NewsApiOrgService } from './services/news-api-org.service';
   ],
   providers: [
     { provide: NEWS_SOURCE, useExisting: TheNewsApiService, multi: true },
-    { provide: NEWS_SOURCE, useExisting: NewsApiOrgService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

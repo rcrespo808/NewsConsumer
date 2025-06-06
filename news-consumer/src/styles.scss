@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap');
+
+:root {
+  --butler-cream: #f5f5f0;
+  --butler-gold: #c4a777;
+  --butler-brown: #2c1810;
+  --butler-text: #333333;
+  --butler-background: #ffffff;
+}
+
+body.dark-theme {
+  --butler-cream: #1a1a1a;
+  --butler-gold: #d4af37;
+  --butler-brown: #e0d3c5;
+  --butler-text: #e0e0e0;
+  --butler-background: #121212;
+}
+
+body {
+  margin: 0;
+  font-family: 'Lora', serif;
+  background-color: var(--butler-background);
+  color: var(--butler-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  color: var(--butler-brown);
+}
+
+/* Add smooth transitions for theme changes */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

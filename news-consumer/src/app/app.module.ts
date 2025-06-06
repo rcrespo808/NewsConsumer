@@ -24,6 +24,7 @@ import { SidebarNavComponent } from './components/sidebar-nav/sidebar-nav.compon
 import { BottomNavComponent } from './components/bottom-nav/bottom-nav.component';
 import { ArticleListComponent } from './components/article-list/article-list.component';
 import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
+import { PreferencesComponent } from './components/preferences/preferences.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ArticleDetailComponent } from './components/article-detail/article-deta
     SidebarNavComponent,
     BottomNavComponent,
     ArticleListComponent,
-    ArticleDetailComponent
+    ArticleDetailComponent,
+    PreferencesComponent
   ],
   imports: [
     BrowserModule,

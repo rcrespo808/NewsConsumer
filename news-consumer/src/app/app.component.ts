@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { Article } from './models/article.interface';
 import { NewsService } from './services/news.service';
+import { AppBarComponent } from './components/app-bar/app-bar.component';
+import { SidebarNavComponent } from './components/sidebar-nav/sidebar-nav.component';
+import { ArticleListComponent } from './components/article-list/article-list.component';
+import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
+import { BottomNavComponent } from './components/bottom-nav/bottom-nav.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -8,75 +14,62 @@ import { NewsService } from './services/news.service';
     <div class="butler-app-shell">
       <app-app-bar (search)="onSearch($event)"></app-app-bar>
       <div class="butler-main-layout">
-        <app-sidebar-nav class="sidebar-nav" (navigate)="onNavigate($event)"></app-sidebar-nav>
+        <app-sidebar-nav class="sidebar-nav"></app-sidebar-nav>
         <main class="main-content">
-          <app-article-list [articles]="articles" (articleSelected)="onArticleClick($event)"></app-article-list>
-          <ng-container *ngIf="isMobile; else desktopDetail">
-            <app-article-detail [article]="selectedArticle"></app-article-detail>
-          </ng-container>
+          <router-outlet></router-outlet>
         </main>
-        <ng-template #desktopDetail>
-          <aside class="article-detail-placeholder">
-            <app-article-detail [article]="selectedArticle"></app-article-detail>
-          </aside>
-        </ng-template>
       </div>
-      <app-bottom-nav class="bottom-nav" (navigate)="onNavigate($event)"></app-bottom-nav>
+      <app-bottom-nav class="bottom-nav"></app-bottom-nav>
     </div>
   `,
-  styleUrls: ['./app.component.scss']
+  styles: [`
+    .butler-app-shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: var(--butler-cream);
+    }
+
+    .butler-main-layout {
+      display: flex;
+      flex: 1;
+      position: relative;
+    }
+
+    .sidebar-nav {
+      width: 240px;
+      background-color: var(--butler-cream);
+      border-right: 1px solid var(--butler-gold);
+      padding: 1rem;
+      display: none;
+
+      @media (min-width: 768px) {
+        display: block;
+      }
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .bottom-nav {
+      display: block;
+      background-color: var(--butler-cream);
+      border-top: 1px solid var(--butler-gold);
+      padding: 0.5rem;
+
+      @media (min-width: 768px) {
+        display: none;
+      }
+    }
+  `]
 })
 export class AppComponent {
-  articles: Article[] = [];
-  selectedArticle: Article | null = null;
-  isMobile = false;
-
-  constructor(private newsService: NewsService) {
-    this.loadArticles();
-    this.checkMobile();
-    window.addEventListener('resize', () => this.checkMobile());
-  }
-
-  loadArticles() {
-    this.newsService.getLatestNews().subscribe(
-      response => {
-        this.articles = response.articles;
-        this.selectedArticle = null;
-      },
-      error => {
-        this.articles = [];
-        this.selectedArticle = null;
-      }
-    );
-  }
+  constructor(private newsService: NewsService) {}
 
   onSearch(keyword: string) {
-    if (!keyword) {
-      this.loadArticles();
-      return;
-    }
-    this.newsService.searchByKeyword(keyword).subscribe(
-      response => {
-        this.articles = response.articles;
-        this.selectedArticle = null;
-      },
-      error => {
-        this.articles = [];
-        this.selectedArticle = null;
-      }
-    );
-  }
-
-  onNavigate(section: string) {
-    // Navigation logic placeholder
-    // Could be expanded to handle routing or section switching
-  }
-
-  onArticleClick(article: Article) {
-    this.selectedArticle = article;
-  }
-
-  checkMobile() {
-    this.isMobile = window.innerWidth < 900;
+    // TODO: Implement search functionality
   }
 }

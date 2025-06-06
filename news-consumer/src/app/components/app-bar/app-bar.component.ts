@@ -1,38 +1,104 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { ButlerIcons } from 'src/assets/butler-icons';
 
 @Component({
   selector: 'app-app-bar',
   template: `
-    <header class="butler-app-bar">
+    <div class="app-bar">
       <div class="app-bar-left">
-        <img src="assets/butler-portrait.png" alt="Butler Portrait" class="butler-avatar" />
-        <span class="app-title">The Butler Brief</span>
+        <img [src]="butlerIcon" alt="Butler Portrait" class="butler-avatar" />
+        <h1>Butler Brief</h1>
       </div>
-      <form class="app-bar-search" (submit)="onSearch($event)">
-        <input
-          type="text"
-          class="butler-search-input"
-          placeholder="Search articles..."
-          [(ngModel)]="searchTerm"
-          name="search"
-          (focus)="searchFocused = true"
-          (blur)="searchFocused = false"
-        />
-        <button type="submit" class="butler-search-btn" aria-label="Search">
-          <span class="material-icons">search</span>
-        </button>
-      </form>
-    </header>
+      <div class="app-bar-right">
+        <form class="search-bar" (ngSubmit)="onSearch()">
+          <input 
+            type="text" 
+            placeholder="Search news..." 
+            [(ngModel)]="searchTerm"
+            name="search"
+          />
+          <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
   `,
-  styleUrls: ['./app-bar.component.scss']
+  styles: [`
+    .app-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background-color: var(--butler-cream);
+      border-bottom: 2px solid var(--butler-gold);
+    }
+
+    .app-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .butler-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--butler-gold);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      color: var(--butler-brown);
+    }
+
+    .app-bar-right {
+      flex: 1;
+      max-width: 600px;
+      margin-left: 2rem;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 0.5rem;
+      background-color: white;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--butler-gold);
+    }
+
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      color: var(--butler-brown);
+    }
+
+    .search-button {
+      background: none;
+      border: none;
+      color: var(--butler-gold);
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--butler-brown);
+      }
+    }
+  `]
 })
 export class AppBarComponent {
   @Output() search = new EventEmitter<string>();
   searchTerm = '';
-  searchFocused = false;
+  butlerIcon = ButlerIcons['6464.png'];
 
-  onSearch(event: Event) {
-    event.preventDefault();
-    this.search.emit(this.searchTerm.trim());
+  onSearch() {
+    if (this.searchTerm.trim()) {
+      this.search.emit(this.searchTerm.trim());
+    }
   }
 } 

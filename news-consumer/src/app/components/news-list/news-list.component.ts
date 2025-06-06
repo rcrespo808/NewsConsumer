@@ -5,80 +5,60 @@ import { Article } from '../../models/article.interface';
 @Component({
   selector: 'app-news-list',
   template: `
-    <div class="news-container" *ngIf="!loading; else loadingTemplate">
-      <app-butler-news-card *ngFor="let article of articles" [article]="article"></app-butler-news-card>
-      <div *ngIf="articles.length === 0" class="no-articles">
-        <span class="butler-placeholder">No articles found. Try a different search term.</span>
+    <div class="feed-container">
+      <app-article-list [articles]="articles" (articleSelected)="onArticleClick($event)"></app-article-list>
+      <div *ngIf="selectedArticle" class="article-detail-container">
+        <app-article-detail [article]="selectedArticle"></app-article-detail>
       </div>
     </div>
-    <ng-template #loadingTemplate>
-      <div class="loading-container">
-        <span class="butler-placeholder">Loading news articles...</span>
-      </div>
-    </ng-template>
   `,
   styles: [`
-    .news-container {
+    .feed-container {
+      max-width: 800px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 2rem;
-      padding: 20px;
     }
-    .loading-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-      gap: 20px;
-    }
-    .no-articles {
-      text-align: center;
-      padding: 40px;
-      color: #665C4E;
-    }
-    @media (max-width: 600px) {
-      .news-container {
-        padding: 10px;
-      }
+
+    .article-detail-container {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      margin-top: 2rem;
     }
   `]
 })
 export class NewsListComponent implements OnInit {
   articles: Article[] = [];
-  loading = true;
+  selectedArticle: Article | null = null;
 
   constructor(private newsService: NewsService) {}
 
   ngOnInit() {
-    this.loadLatestNews();
+    this.loadArticles();
   }
 
-  loadLatestNews() {
-    this.loading = true;
+  loadArticles() {
     this.newsService.getLatestNews().subscribe(
       response => {
         this.articles = response.articles;
-        this.loading = false;
+        this.selectedArticle = null;
       },
       error => {
-        console.error('Error loading news:', error);
-        this.loading = false;
+        this.articles = [];
+        this.selectedArticle = null;
       }
     );
   }
 
-  searchNews(keyword: string) {
-    this.loading = true;
-    this.newsService.searchByKeyword(keyword).subscribe(
-      response => {
-        this.articles = response.articles;
-        this.loading = false;
-      },
-      error => {
-        console.error('Error searching news:', error);
-        this.loading = false;
-      }
-    );
+  onArticleClick(article: Article) {
+    this.selectedArticle = article;
+    // Scroll to the article detail section
+    const detailContainer = document.querySelector('.article-detail-container');
+    if (detailContainer) {
+      detailContainer.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }

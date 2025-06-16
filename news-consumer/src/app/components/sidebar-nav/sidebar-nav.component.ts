@@ -13,6 +13,12 @@ import { RouterModule } from '@angular/router';
           </a>
         </li>
         <li>
+          <a routerLink="/search" routerLinkActive="active">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+          </a>
+        </li>
+        <li>
           <a routerLink="/preferences" routerLinkActive="active">
             <i class="fas fa-cog"></i>
             <span>Preferences</span>

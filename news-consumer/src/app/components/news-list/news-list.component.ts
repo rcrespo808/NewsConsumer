@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NewsAggregatorService } from '../../services/news-aggregator.service';
 import { PreferencesService } from '../../services/preferences.service';
 import { Article } from '../../models/article.interface';
@@ -55,9 +55,11 @@ export class NewsListComponent implements OnInit {
   filteredArticles: Article[] = [];
   selectedArticle: Article | null = null;
   loading = false;
+  loadingMore = false;
   error: string | null = null;
   enabledSources: SourceOption[] = [];
   selectedSourceId: string = '';
+  page = 1;
 
   constructor(
     private aggregator: NewsAggregatorService,
@@ -80,9 +82,10 @@ export class NewsListComponent implements OnInit {
 
   loadArticles() {
     this.loading = true;
+    this.page = 1;
     this.error = null;
 
-    this.aggregator.getLatestNews().subscribe({
+    this.aggregator.getLatestNews(this.page).subscribe({
       next: (articles: Article[]) => {
         this.articles = articles;
         this.selectedArticle = null;
@@ -94,6 +97,30 @@ export class NewsListComponent implements OnInit {
         console.error('Error loading news:', err);
       }
     });
+  }
+
+  loadMore() {
+    if (this.loadingMore) return;
+    this.loadingMore = true;
+    this.page += 1;
+    this.aggregator.getLatestNews(this.page).subscribe({
+      next: (articles: Article[]) => {
+        this.articles = this.articles.concat(articles);
+        this.loadingMore = false;
+      },
+      error: () => {
+        this.loadingMore = false;
+      }
+    });
+  }
+
+  @HostListener('window:scroll')
+  onScroll() {
+    const threshold = 300;
+    const position = window.innerHeight + window.scrollY;
+    if (position >= document.body.offsetHeight - threshold && !this.loading && !this.loadingMore) {
+      this.loadMore();
+    }
   }
 
   onArticleClick(article: Article) {

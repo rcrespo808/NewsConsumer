@@ -25,6 +25,7 @@ import { ArticleListComponent } from './components/article-list/article-list.com
 import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { SearchComponent } from './components/search/search.component';
+import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 import { NEWS_SOURCE } from './services/news-source.interface';
 import { TheNewsApiService } from './services/the-news-api.service';
 
@@ -41,7 +42,8 @@ import { TheNewsApiService } from './services/the-news-api.service';
     ArticleListComponent,
     ArticleDetailComponent,
     PreferencesComponent,
-    SearchComponent
+    SearchComponent,
+    BookmarksComponent
   ],
   imports: [
     BrowserModule,

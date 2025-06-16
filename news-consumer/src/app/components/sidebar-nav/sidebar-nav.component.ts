@@ -19,6 +19,12 @@ import { RouterModule } from '@angular/router';
           </a>
         </li>
         <li>
+          <a routerLink="/bookmarks" routerLinkActive="active">
+            <i class="fas fa-bookmark"></i>
+            <span>Bookmarks</span>
+          </a>
+        </li>
+        <li>
           <a routerLink="/preferences" routerLinkActive="active">
             <i class="fas fa-cog"></i>
             <span>Preferences</span>

@@ -17,11 +17,12 @@ export class TheNewsApiService implements NewsSource {
 
   constructor(private http: HttpClient) {}
 
-  getLatestNews(): Observable<Article[]> {
+  getLatestNews(page = 1): Observable<Article[]> {
     const params = new HttpParams()
       .set('api_token', this.API_KEY)
       .set('language', 'en')
-      .set('limit', '10');
+      .set('limit', '10')
+      .set('page', String(page));
 
     return this.http.get<any>(`${this.BASE_URL}/news/top`, { params }).pipe(
       map((response: any) => response.data.map((item: any) => ({

@@ -26,14 +26,14 @@ export class NewsAggregatorService {
     }
   }
 
-  getLatestNews(): Observable<Article[]> {
+  getLatestNews(page = 1): Observable<Article[]> {
     const enabledIds: string[] = this.getEnabledSourceIds();
     if (enabledIds.length === 0) {
       return of([]);
     }
     const observables: Observable<Article[]>[] = enabledIds
       .filter((id: string) => this.sources[id])
-      .map((id: string) => this.sources[id].getLatestNews().pipe(
+      .map((id: string) => this.sources[id].getLatestNews(page).pipe(
         catchError(() => of([]))
       ));
     return forkJoin(observables).pipe(

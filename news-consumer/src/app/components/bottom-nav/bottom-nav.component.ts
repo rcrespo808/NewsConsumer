@@ -1,36 +1,28 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-bottom-nav',
   template: `
     <nav class="butler-bottom-nav" aria-label="Bottom navigation">
-      <button
-        *ngFor="let item of navItems; let i = index"
+      <a
+        *ngFor="let item of navItems"
         class="bottom-nav-btn"
-        [class.active]="activeIndex === i"
-        (click)="onNav(i)"
-        [attr.aria-current]="activeIndex === i ? 'page' : null"
-        tabindex="0"
+        routerLink="{{ item.path }}"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
         [attr.aria-label]="item.label"
       >
         <span class="material-icons">{{ item.icon }}</span>
         <span class="nav-label">{{ item.label }}</span>
-      </button>
+      </a>
     </nav>
   `,
   styleUrls: ['./bottom-nav.component.scss']
 })
 export class BottomNavComponent {
-  @Output() navigate = new EventEmitter<string>();
   navItems = [
-    { label: 'Home', icon: 'home' },
-    { label: 'Bookmarks', icon: 'bookmark' },
-    { label: 'Info', icon: 'info' }
+    { label: 'Home', icon: 'home', path: '/' },
+    { label: 'Bookmarks', icon: 'bookmark', path: '/bookmarks' },
+    { label: 'Info', icon: 'info', path: '/about' }
   ];
-  activeIndex = 0;
-
-  onNav(index: number) {
-    this.activeIndex = index;
-    this.navigate.emit(this.navItems[index].label);
-  }
-} 
+}
